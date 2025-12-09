@@ -1,0 +1,6 @@
+/* body {
+  @apply font-mont;
+} */
+@import "tailwindcss";
+@import "tw-animate-css";
+
