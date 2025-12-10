@@ -1,4 +1,4 @@
-import { UserButton } from "@clerk/clerk-react";
+import { UserButton, OrganizationSwitcher } from "@clerk/clerk-react";
 import { FiSearch, FiPlus } from "react-icons/fi";
 
 export default function Navbar() {
@@ -13,8 +13,9 @@ export default function Navbar() {
       </div>
 
       <div className="flex items-center gap-4">
-        <button className="flex items-center gap-2 px-4 py-2 bg-black text-white rounded-lg">
-          <FiPlus /> Create New Tenant
+        <button className="flex items-center gap-2 px-4 py-2 text-white rounded-lg">
+          {/* <FiPlus /> Create New Tenant */}
+          <OrganizationSwitcher/>
         </button>
 
         <UserButton />

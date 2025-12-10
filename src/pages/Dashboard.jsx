@@ -1,5 +1,5 @@
 import StatCard from "../components/StatCard";
-import TenantTable from "../components/TenantTable";
+import TenantTable from "./TenantTable";
 
 export default function Dashboard() {
   return (
