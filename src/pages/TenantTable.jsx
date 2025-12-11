@@ -10,8 +10,12 @@ export default function TenantTable() {
   // ---------------------
   const [tenants, setTenants] = useState([
     { id: 1, name: "Tenant 1", campaign: "1,256", running: 500, status: "Running", date: "2025-12-24", enabled: true },
-    { id: 2, name: "Tenant 2", campaign: "980", running: 300, status: "Pending", date: "2025-12-24", enabled: false },
-    { id: 3, name: "Tenant 3", campaign: "734", running: 200, status: "Approval", date: "2025-12-24", enabled: true },
+    { id: 2, name: "Tenant 2", campaign: "980", running: 300, status: "Running", date: "2025-12-24", enabled: false },
+    { id: 3, name: "Tenant 3", campaign: "734", running: 200, status: "Completed", date: "2025-12-24", enabled: true },
+    { id: 4, name: "Tenant 4", campaign: "738", running: 200, status: "Approval", date: "2025-12-24", enabled: true },
+    { id: 5, name: "Tenant 5", campaign: "634", running: 200, status: "Running", date: "2025-12-24", enabled: false },
+    { id: 6, name: "Tenant 6", campaign: "534", running: 200, status: "Completed", date: "2025-12-24", enabled: true },
+    { id: 7, name: "Tenant 7", campaign: "824", running: 200, status: "Running", date: "2025-12-24", enabled: false },
   ]);
 
   const statusColors = {

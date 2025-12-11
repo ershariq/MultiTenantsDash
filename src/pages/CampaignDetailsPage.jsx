@@ -1,5 +1,5 @@
 import { useState, useMemo, useEffect } from "react";
-import { Pencil, Play } from "lucide-react";
+import { Pencil, Play, X, Check } from "lucide-react";
 
 export default function PlaceDetailsPage() {
 
@@ -32,7 +32,6 @@ export default function PlaceDetailsPage() {
     // ---------------------
     // POPUP STATE
     // ---------------------
-    const [showPopup, setShowPopup] = useState(false);
     const [editing, setEditing] = useState(null);
     const [form, setForm] = useState({ name: "", companyId: "", email: "", phone: "" });
 
@@ -49,6 +48,12 @@ export default function PlaceDetailsPage() {
         setEditing(t.id);
         setForm(t);
     };
+    const saveTenant = () => {
+    setTenants((prev) =>
+      prev.map((t) => (t.id === editing ? form : t))
+    );
+    setEditing(null);
+  };
 
     // TOGGLE ENABLE
     const handleToggle = (id) => {
@@ -75,87 +80,7 @@ export default function PlaceDetailsPage() {
     }, [page, rows]);
 
 
-    return (<>
-        {/*              ADD TENANT MODAL POPUP           */}
-        {showPopup && (
-            <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-                <div className="bg-white rounded-lg p-6 w-[450px] shadow-lg relative">
-                    <button onClick={() => setShowPopup(false)} className="absolute top-3 right-3 cursor-pointer">
-                        <X size={20} />
-                    </button>
-
-                    <h2 className="text-lg font-bold mb-4">Add New Tenant</h2>
-                    {/* BREADCRUMBS */}
-                    <div className="text-sm text-gray-500 mb-4">
-                        Home / Tenants / <span className="text-gray-600 font-medium">Add New Tenant</span>
-                    </div>
-
-                    <div className="mb-3">
-                        <label className="text-sm font-semibold">Tenant Name</label>
-                        <input
-                            type="text"
-                            className="w-full border p-2 rounded mt-1"
-                            placeholder="Tenant Name"
-                            value={form.name}
-                            onChange={(e) => setForm({ ...form, name: e.target.value })}
-                        />
-                    </div>
-
-                    <div className="mb-3">
-                        <label className="text-sm font-semibold">Company ID</label>
-                        <input
-                            type="text"
-                            className="w-full border p-2 rounded mt-1"
-                            placeholder="Company Name"
-                            value={form.companyId}
-                            onChange={(e) => setForm({ ...form, companyId: e.target.value })}
-                        />
-                    </div>
-
-                    {/* EMAIL + PHONE */}
-                    <div className="grid grid-cols-2 gap-3 mb-3">
-                        <div>
-                            <label className="text-sm font-semibold">Email</label>
-                            <input
-                                type="email"
-                                className="w-full border p-2 rounded mt-1"
-                                placeholder="Email"
-                                value={form.email}
-                                onChange={(e) => setForm({ ...form, email: e.target.value })}
-                            />
-                        </div>
-
-                        <div>
-                            <label className="text-sm font-semibold">Contact Number</label>
-                            <input
-                                type="text"
-                                className="w-full border p-2 rounded mt-1"
-                                placeholder="Contact No."
-                                value={form.phone}
-                                onChange={(e) => setForm({ ...form, phone: e.target.value })}
-                            />
-                        </div>
-                    </div>
-
-                    {/* BUTTONS */}
-                    <div className="flex justify-between mt-16 gap-2">
-                        <button
-                            onClick={addTenant}
-                            className="bg-green-600 text-white px-6 py-2 rounded w-1/2"
-                        >
-                            ADD
-                        </button>
-
-                        <button
-                            onClick={() => setShowPopup(false)}
-                            className="bg-red-600 text-white px-6 py-2 rounded w-1/2"
-                        >
-                            CANCEL
-                        </button>
-                    </div>
-                </div>
-            </div>
-        )}
+    return (
         <div className="p-6 flex gap-6">
 
             {/* LEFT CAMPAIGN CARD */}
@@ -242,8 +167,8 @@ export default function PlaceDetailsPage() {
                                         <button
                                             onClick={() => (r.enabled ? startEdit(r) : null)}
                                             className={`p-1 rounded ${!r.enabled
-                                                    ? "cursor-not-allowed opacity-50"
-                                                    : "hover:bg-gray-100"
+                                                ? "cursor-not-allowed opacity-50"
+                                                : "hover:bg-gray-100"
                                                 }`}
                                             title={r.enabled ? "Edit" : "Disabled"}
                                             disabled={!r.enabled}
@@ -257,8 +182,8 @@ export default function PlaceDetailsPage() {
                                                 r.enabled ? console.log("Play Video:", r.id) : null
                                             }
                                             className={`p-1 rounded ${!r.enabled
-                                                    ? "cursor-not-allowed opacity-50"
-                                                    : "hover:bg-gray-100"
+                                                ? "cursor-not-allowed opacity-50"
+                                                : "hover:bg-gray-100"
                                                 }`}
                                             title={r.enabled ? "Play" : "Disabled"}
                                             disabled={!r.enabled}
@@ -285,6 +210,81 @@ export default function PlaceDetailsPage() {
                         ))}
                     </tbody>
                 </table>
+
+                {/* -----------------------------
+          EDIT FORM POPUP
+      ----------------------------- */}
+                {editing && (
+                    <div className="fixed inset-0 bg-black/40 flex justify-center items-center z-10">
+                        <div className="bg-white p-6 rounded-lg w-96 shadow-lg">
+                            <h3 className="text-lg font-semibold mb-4">Edit Tenant</h3>
+
+                            <div className="flex flex-col gap-3">
+                                <input
+                                    className="border p-2 rounded"
+                                    placeholder="Video Name"
+                                    value={form.name}
+                                    onChange={(e) =>
+                                        setForm({ ...form, name: e.target.value })
+                                    }
+                                />
+                                <input
+                                    className="border p-2 rounded"
+                                    placeholder="Campaign Count"
+                                    value={form.campaign}
+                                    onChange={(e) =>
+                                        setForm({ ...form, campaign: e.target.value })
+                                    }
+                                />
+                                <input
+                                    className="border p-2 rounded"
+                                    placeholder="Running Campaign"
+                                    value={form.running}
+                                    onChange={(e) =>
+                                        setForm({ ...form, running: e.target.value })
+                                    }
+                                />
+
+                                <input
+                                    className="border p-2 rounded"
+                                    type="date"
+                                    value={form.date}
+                                    onChange={(e) =>
+                                        setForm({ ...form, date: e.target.value })
+                                    }
+                                />
+
+                                <select
+                                    className="border p-2 rounded"
+                                    value={form.status}
+                                    onChange={(e) =>
+                                        setForm({ ...form, status: e.target.value })
+                                    }
+                                >
+                                    <option>Running</option>
+                                    <option>Pending</option>
+                                    <option>Approval</option>
+                                    <option>Completed</option>
+                                </select>
+                            </div>
+
+                            <div className="flex justify-end gap-4 mt-5">
+                                <button
+                                    onClick={() => setEditing(null)}
+                                    className="flex items-center gap-2 px-4 py-2 bg-gray-200 rounded"
+                                >
+                                    <X size={16} /> Cancel
+                                </button>
+                                <button
+                                    onClick={saveTenant}
+                                    className="flex items-center gap-2 px-4 py-2 bg-black text-white rounded"
+                                >
+                                    <Check size={16} /> Save
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                )}
 
                 {/* PAGINATION */}
                 <div className="flex justify-between items-center mt-4 text-sm text-gray-600">
@@ -325,6 +325,5 @@ export default function PlaceDetailsPage() {
             </div>
 
         </div>
-    </>
     );
 }

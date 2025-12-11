@@ -2,6 +2,7 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { Eye, Trash2, Pencil } from "lucide-react";
 import { useMemo, useState } from "react";
+import Breadcrumb from "@/components/Breadcrumb";
 
 export default function TenantDetailsPage() {
   const { id } = useParams();
@@ -59,8 +60,26 @@ export default function TenantDetailsPage() {
   };
 
   return (
-    <div className="p-6">
-      <h2 className="text-xl font-semibold mb-4">Tenant {id} - Places</h2>
+    <div>
+      {/* breadcrumb inserted */}
+
+      <div>
+        <Breadcrumb
+          title="Dashboard"
+          paths={[
+            { label: "Home", link: "/" },
+            { label: "Tenants", link: "/tenants" },
+            { label: "Tenants Detail Page" } 
+          ]}
+        />
+
+        {/* Page Content Here */}
+      </div>
+
+      {/* Tenants Name will show here */}
+      <div className="bg-white shadow-sm rounded-2xl p-6 mt-2 mb-2">
+        <h2 className="text-xl font-semibold mb-4">Tenant {id} - Places</h2>
+      </div>
 
       <div className="bg-white rounded-lg shadow p-5">
 
